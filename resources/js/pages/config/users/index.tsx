@@ -11,7 +11,17 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Label } from "@/components/ui/label"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+  } from "@/components/ui/sheet"
+  import { Input } from "@/components/ui/input"
 
 // Icons
 import { UserPlus, UserPen, Eraser, ShieldX, ShieldCheck } from 'lucide-react';
@@ -164,15 +174,50 @@ interface User {
                                     <div className="flex justify-center space-x-1">
                                     <Tooltip>
                                         <TooltipTrigger asChild>
-                                            <Button variant="outline" size="icon" className="size-8 hover:border-sky-300" asChild>
+                                            {/* <Button variant="outline" size="icon" className="size-8 hover:border-sky-300" asChild>
                                                 <Link href={route('users.edit', user.id)}>
                                                     <UserPen className="size-4" />
                                                 </Link>
-                                            </Button>
+                                            </Button> */}
+                                            <Sheet>
+                                            <SheetTrigger asChild>
+                                                {/* <Button variant="outline">Open</Button> */}
+                                                <Button variant="outline" size="icon" className="size-8 hover:border-sky-300" asChild>
+                                                    <a>
+                                                        <UserPen className="size-4" />
+                                                    </a>
+                                                </Button>
+                                            </SheetTrigger>
+                                            <SheetContent>
+                                                <SheetHeader>
+                                                <SheetTitle>Edit profile</SheetTitle>
+                                                <SheetDescription>
+                                                    Make changes to your profile here. Click save when you&apos;re done.
+                                                </SheetDescription>
+                                                </SheetHeader>
+                                                <div className="grid flex-1 auto-rows-min gap-6 px-4">
+                                                <div className="grid gap-3">
+                                                    <Label htmlFor="sheet-demo-name">Name</Label>
+                                                    <Input id="sheet-demo-name" defaultValue="Pedro Duarte" />
+                                                </div>
+                                                <div className="grid gap-3">
+                                                    <Label htmlFor="sheet-demo-username">Username</Label>
+                                                    <Input id="sheet-demo-username" defaultValue="@peduarte" />
+                                                </div>
+                                                </div>
+                                                <SheetFooter>
+                                                <Button type="submit">Save changes</Button>
+                                                <SheetClose asChild>
+                                                    <Button variant="outline">Close</Button>
+                                                </SheetClose>
+                                                </SheetFooter>
+                                            </SheetContent>
+                                        </Sheet>
                                         </TooltipTrigger>
                                         <TooltipContent side="left">
                                             <p>Editar</p>
                                         </TooltipContent>
+                                        
                                     </Tooltip>
                                     <AppButtonDelete user={user} />
                                     {/* <Tooltip>
