@@ -160,11 +160,10 @@ export default function Create() {
                                     tabIndex={6}
                                     value={data.status}
                                     onChange={(e) => setData('status', e.target.value)}
-                                    defaultValue=""
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-0 focus:ring-blue-500 focus:border-blue-500"
                                     required
                                     >
-                                    <option value="" disabled selected></option>
+                                    <option value="" disabled></option>
                                     <option value="active">Activo</option>
                                     <option value="inactive">Inactivo</option>
                                 </select>
