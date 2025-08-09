@@ -69,7 +69,30 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        
+        // La validación ya se realizó automáticamente
+        $validated = $request->validated();
+
+        return ($validated);
+        try {
+            // Crear el usuario
+            $validated = $request->validated();
+
+            User::create($validated);
+
+            return redirect()->route('users.index')->with('toast', [
+                'type' => 'success', 
+                'message' => 'Usuario creado correctamente.'
+            ]);
+        } catch (\Exception $e) {
+            return back()->with('toast', [
+                'type' => 'error', 
+                'message' => 'Error al crear el usuario: ' . $e->getMessage()
+            ]);
+        }
+
+            
+            
+
     }
 
     /**

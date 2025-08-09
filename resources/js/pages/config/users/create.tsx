@@ -41,7 +41,7 @@ type RegisterForm = {
 };  
 
 export default function Create() {
-    const { data, setData, post, processing, errors, reset } = useForm<Required<RegisterForm>>({
+    const { data, setData, post, processing, errors, reset } = useForm({
             name: '',
             lastname: '',
             username: '',
@@ -52,10 +52,9 @@ export default function Create() {
             password_confirmation: '',
         });
     
-        const submit: FormEventHandler = (e) => {
+        const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-            post(route('register'), {
-                onFinish: () => reset('password', 'password_confirmation'),
+                post(route('users.store'), {
             });
         };
     
@@ -64,14 +63,14 @@ export default function Create() {
             <Head title="User | Create" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">                
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border p-4">
-                    <form className="flex flex-col gap-6 mt-2" onSubmit={submit}>
+                    <form className="flex flex-col gap-6 mt-2" onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div className="grid gap-2">
                                 <Label htmlFor="name">Name</Label>
                                 <Input
                                     id="name"
                                     type="text"
-                                    required
+                                    // required
                                     autoFocus
                                     tabIndex={1}
                                     autoComplete="name"
@@ -89,7 +88,7 @@ export default function Create() {
                                 <Input
                                     id="lastname"
                                     type="text"
-                                    required                                    
+                                    // required                                    
                                     tabIndex={2}
                                     autoComplete="lastname"
                                     value={data.name}
@@ -105,7 +104,7 @@ export default function Create() {
                                 <Input
                                     id="username"
                                     type="text"
-                                    required                                    
+                                    // required                                    
                                     tabIndex={3}
                                     autoComplete="username"
                                     value={data.name}
@@ -123,7 +122,7 @@ export default function Create() {
                                 <Input
                                     id="email"
                                     type="email"
-                                    required
+                                    // required
                                     tabIndex={4}
                                     autoComplete="email"
                                     value={data.email}
@@ -146,7 +145,7 @@ export default function Create() {
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-0 focus:ring-blue-500 focus:border-blue-500"
                                     required
                                     >
-                                    <option value="" disabled selected></option>
+                                    <option value="" disabled></option>
                                     <option value="male">Hombre</option>
                                     <option value="female">Mujer</option>
                                 </select>
@@ -179,7 +178,7 @@ export default function Create() {
                                 <Input
                                     id="password"
                                     type="password"
-                                    required
+                                    // required
                                     tabIndex={7}
                                     autoComplete="new-password"
                                     value={data.password}
@@ -196,7 +195,7 @@ export default function Create() {
                                 <Input
                                     id="password_confirmation"
                                     type="password"
-                                    required
+                                    // required
                                     tabIndex={8}
                                     autoComplete="new-password"
                                     value={data.password_confirmation}
