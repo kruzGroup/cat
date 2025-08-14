@@ -14,11 +14,11 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {        
+    public function index(Request $request, User $users)
+    {                   
         $perPage = $request->input('perPage', 5);
 
-        return Inertia::render('config/users/index', [
+            return Inertia::render('config/users/index', [
             'users' => User::search($request->search)
                 ->when($request->input('status') === 'active', function ($query) {
                     $query->where('status', 'active');

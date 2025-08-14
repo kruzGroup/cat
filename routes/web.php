@@ -10,6 +10,7 @@ use App\Http\Controllers\JobtitlesController;
 use App\Http\Controllers\LicenseController;
 use App\Http\Controllers\MissionController;
 use App\Http\Controllers\PermitController;
+use App\Http\Controllers\SolvencyController;
 use App\Http\Controllers\TaxpayerController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
@@ -36,6 +37,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'units/cat-empresas/taxpayers' => TaxpayerController::class,
         'units/cat-empresas/companies' => CompanyController::class,
         'units/cat-empresas/licenses' => LicenseController::class,
+        'units/cat-empresas/solvencies' => SolvencyController::class,
         // Forms Group
         'forms/inspections' => InspectionController::class,
         'forms/statements' => StatementController::class,

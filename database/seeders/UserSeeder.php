@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('naho'),
                 'status' => 'active',
                 'gender' => 'hombre',
-                'avatar' => 'public/users/frankyKruz.png',
+                'avatar' => 'public/users/francisco-cruz.png',
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
