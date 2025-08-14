@@ -17,7 +17,14 @@ class SolvencyFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'extend_to' => fake()->text($maxNbChars = 100), // Fecha futura
+            'specs' => fake()->text($maxNbChars = 100), // Texto aleatorio de 200 caracteres
+            'user_id' => fake()->numberBetween($min = 2, $max = 10), // Relación con User (creará un User si no existe)
+            'company_id' => fake()->numberBetween($min = 2, $max = 11), // Relación con Company
+            'taxpayer_id' => fake()->numberBetween($min = 2, $max = 25), // Relación con Taxpayer
+            'created_at' => now(),
+            'updated_at' => now(),
+            
         ];
     }
 }

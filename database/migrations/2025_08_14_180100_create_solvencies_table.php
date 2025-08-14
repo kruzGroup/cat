@@ -13,7 +13,24 @@ return new class extends Migration
     {
         Schema::create('solvencies', function (Blueprint $table) {
             $table->id();
+
+            $table->string('extend_to');
+            $table->string('specs');
+
             $table->timestamps();
+
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('company_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('taxpayer_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

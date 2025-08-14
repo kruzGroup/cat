@@ -47,6 +47,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     ]);
 
+    Route::get('units/cat-empresas/solvencies{solvencies}', [SolvencyController::class, 'generateSolvencyPdf'])->name('solvencies.generateSolvencyPdf');
+
 });
 
 require __DIR__.'/settings.php';

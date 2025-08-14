@@ -6,16 +6,20 @@ use App\Models\Solvency;
 use App\Http\Requests\StoreSolvencyRequest;
 use App\Http\Requests\UpdateSolvencyRequest;
 use Inertia\Inertia;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SolvencyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index()        
+
     {
-        return Inertia::render('units/cat-empresas/solvencies/index');
-        
+        $solvencies = Solvency::all();
+        return Inertia::render('units/cat-empresas/solvencies/index',[
+            'solvencies' => $solvencies,
+        ]);        
     }
 
     /**
@@ -64,5 +68,13 @@ class SolvencyController extends Controller
     public function destroy(Solvency $solvency)
     {
         //
+    }
+
+        public function generateSolvencyPdf($id)
+    {
+        $solvency = Solvency::with('user')->find($id); // Ajusta relaciones según tu DB
+        $pdf = Pdf::loadView('solvencies.pdf', compact('solvency'));
+        
+        return $pdf->download("solvencia-{$solvency->id}.pdf");
     }
 }

@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('taxpayers', function (Blueprint $table) {
             $table->id();
+            $table->string('account_number');
+            $table->string('name');
+            $table->string('lastname');
+            $table->string('dui')->unique();
+            $table->string('gender')->nullable();
+            $table->string('address_home')->nullable();
+            $table->string('address_bill')->nullable();
+            $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
     }

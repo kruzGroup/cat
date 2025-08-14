@@ -13,7 +13,19 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('nit', 17);
+            $table->string('address', 200);
+            $table->string('description',200);
+            $table->string('legal_rep', 50);
+            $table->string('avatar')->nullable();
+            
             $table->timestamps();
+
+            $table->foreignId('taxpayer_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

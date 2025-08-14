@@ -17,7 +17,14 @@ class CompanyFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->company(),
+            'nit' => fake()->numberBetween($min = 0000, $max = 9999).'-'.fake()->numberBetween($min = 000000, $max = 999999).'-'.fake()->numberBetween($min = 000, $max = 999).'-'.fake()->numberBetween($min = 0, $max = 9),
+            'address' => fake()->address(),
+            'description' => fake()->text($maxNbChars = 190),
+            'legal_rep' => fake()->name($gender = 'male'|'female'),
+            'created_at' => now(),
+            'updated_at' => now(),
+            'taxpayer_id' => fake()->numberBetween($min = 1, $max = 11),
         ];
     }
 }
