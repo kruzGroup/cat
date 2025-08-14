@@ -6,7 +6,7 @@ import { Sidebar, SidebarContent, SidebarGroup, SidebarHeader, SidebarMenu, Side
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { SunMoon, Boxes, Landmark, MapPinned, UserCog, DoorClosedLocked, FileDigit, FileClock, FileInput, FileSearch, IdCardLanyard, Pickaxe, ClipboardCheck, LayoutGrid, SlidersHorizontal, ChevronDown, Users, Combine, BriefcaseBusiness } from 'lucide-react';
+import { SunMoon, Boxes, Landmark, MapPinned, UserCog, DoorClosedLocked, FileDigit, FileClock, FileInput, FileSearch, IdCardLanyard, Pickaxe, ClipboardCheck, LayoutGrid, SlidersHorizontal, ChevronDown, Users, Combine, BriefcaseBusiness, TicketCheck } from 'lucide-react';
 
 
 import AppLogo from './app-logo';
@@ -60,6 +60,7 @@ type MenuItem = {
       { key: 'taxpayers', path: '/units/cat-empresas/taxpayers', icon: <Users />, label: 'Contribuyentes', parentKey: 'catastro-empresas' },
       { key: 'companies', path: '/units/cat-empresas/companies', icon: <BriefcaseBusiness />, label: 'Empresas', parentKey: 'catastro-empresas' },
       { key: 'licenses', path: '/units/cat-empresas/licenses', icon: <FileSearch />, label: 'Licencias', parentKey: 'catastro-empresas' },
+      { key: 'solvencies', path: '/units/cat-empresas/solvencies', icon: <TicketCheck />, label: 'Solvencias', parentKey: 'catastro-empresas' },
 
       // Formularios
       { key: 'formularios', path: '', icon: <FileInput />, label: 'Formularios' },
