@@ -18,7 +18,10 @@ return new class extends Migration
             $table->string('address', 200);
             $table->string('description',200);
             $table->string('legal_rep', 50);
+            $table->enum('gender', ['hombre', 'mujer'])->nullable();
             $table->string('avatar')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
+
             
             $table->timestamps();
 

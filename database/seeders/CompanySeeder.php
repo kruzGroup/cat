@@ -20,11 +20,13 @@ class CompanySeeder extends Seeder
             'address' => 'Col. San Juan Bosco, Pje 2, Pol. B, Lote 17',
             'nit' => '1123-200276-101-8',
             'legal_rep' => 'Francisco Kruz Batres',
+            'status' => 'active',
+            'gender' => 'hombre',
             'created_at' => now(),
             'updated_at' => now(),
             'taxpayer_id' => 1,
         ]);
 
-        Company::factory(10)->create();
+        Company::factory(9)->create();
     }
 }

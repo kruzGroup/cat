@@ -32,22 +32,50 @@ import AppButtonDelete from '@/components/app-button-delete';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Configurations',
-        href: '/config/users',
+        title: 'Catastro Empresas',
+        href: '/units/cat-empresas/solvencies/',
     },
     {
-        title: 'Users',
-        href: '/config/users',
+        title: 'Solvencias',
+        href: '',
     },
 ];
 
-interface Solvency {
-    id: number;    
-    created_at: string;    
-  }  
   
+  interface Solvency {
+    id: number;
+    company_name: string;
+    taxpayer_name: string;
+    nit: string;
+    avatar?: string;
+    status: string;
+    statusDisplay: string;
+    statusColor: string;
+    created_at: string;
+    avatar_url?: string;
+    avatar_color: string;
+    created_at_diffForHumans: string;
+  }
   
-    export default function Index() {
+  type SolvenciesPaginated = {
+      data: Solvency[],
+      links: PageLinkItem[]
+  };
+  
+  type Filters = {
+      search: string,
+      perPage: number,
+  };
+
+  type IndexProps = {
+      solvencies: SolvenciesPaginated,
+      filters: Filters & { status: string | null },
+  };
+  
+    export default function Index({ solvencies, filters,  } : IndexProps) {
+    const [search, setSearch] = useState(filters.search || '');
+    const page = usePage();
+
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -55,13 +83,14 @@ interface Solvency {
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">                
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border dark:bg-sidebar">
                     {/* <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" /> */}
+                    <AppUserSearch inicialSearch={filters.search} filters={filters} />
                     <div className='overflow-x-auto border border-gray-200 dark:border-neutral-700 rounded-lg m-4'>
                         <Table className="min-w-full border-separate border-spacing-0">
                             <TableHeader className="bg-gray-100 dark:bg-background">
                                 <TableRow className="hover:bg-gray-200 dark:hover:bg-accent">
-                                    <TableHead className="text-gray-700 dark:text-foreground font-medium py-3 pl-4 text-center">Users</TableHead>
-                                    <TableHead className="text-gray-700 dark:text-foreground font-medium py-3 text-center">Username</TableHead>
-                                    <TableHead className="text-gray-700 dark:text-foreground font-medium py-3 text-center">Estado</TableHead>
+                                    <TableHead className="text-gray-700 dark:text-foreground font-medium py-3 pl-4 text-center">Company Name</TableHead>
+                                    <TableHead className="text-gray-700 dark:text-foreground font-medium py-3 text-center">NIT</TableHead>
+                                    <TableHead className="text-gray-700 dark:text-foreground font-medium py-3 text-center">Status</TableHead>
                                     <TableHead className="text-gray-700 dark:text-foreground font-medium py-3 text-center">Fecha Creación</TableHead>
                                     <TableHead className="text-gray-700 dark:text-foreground font-medium py-3 pr-4 text-center">Acciones</TableHead>
                                 </TableRow>
@@ -71,16 +100,16 @@ interface Solvency {
                                 <TableRow key={solv.id} className="hover:bg-teal-200/10 dark:hover:bg-stone-600/10 transition-colors border-b-4 border-amber-300">
                                     <TableCell className="py-3 pl-4" >
                                     <div className="flex items-center space-x-3">
-                                        <Avatar className={`border-3 size-10 ${!solv.avatar ? solv.avatar_color : ''}`}>
+                                        <Avatar className={`border-3 size-10 ${!solv.avatar_url ? solv.avatar_color : ''}`}>
                                             {solv.avatar_url ? (
                                                 <AvatarImage 
                                                 src={solv.avatar_url} 
-                                                alt={`Avatar de ${solv.name}`}
+                                                alt={`Avatar de ${solv.company_name}`}
                                                 className="object-cover"
                                                 />
                                             ) : (
-                                                <AvatarFallback className={`text-xs font-bold ${solv.avatar_color.replace('text-', '')}`}>
-                                                {solv.name.split(' ')
+                                                <AvatarFallback className={`text-xs font-bold ${solv.avatar_color}`}>
+                                                {solv.company_name.split(' ')
                                                 .filter((name: string) => name.length > 0)
                                                .map((name: string) => name[0].toUpperCase())
                                                 .join('')
@@ -88,44 +117,45 @@ interface Solvency {
                                                 </AvatarFallback>
                                             )}
                                         </Avatar>
+                                        
                                         <div>
-                                            <Link href={route('solvencies.show', solv.id)}>
-                                                <p className="text-xs font-bold text-gray-900 dark:text-gray-50 uppercase ">{solv.full_name}</p>
-                                                <span className="text-sm text-gray-500 dark:text-gray-200">{solv.email}</span>
+                                            <Link href={route('users.show', solv.id)}>
+                                                <p className="text-xs font-bold text-gray-900 dark:text-gray-50 uppercase ">{solv.company_name}</p>
+                                                <span className="text-sm text-gray-500 dark:text-gray-200">{solv.taxpayer_name}</span>
                                             </Link>                                            
                                         </div>
                                     </div>
                                     </TableCell>
                                     <TableCell className="text-gray-700 dark:text-foreground text-center">
-                                        @{solv.dui.toLowerCase()}
+                                        {solv.nit}
+                                    </TableCell>
+                                    <TableCell className='flex justify-center justify-items-center h-full'>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>                                                
+                                                {solv.status === 'active' ? <ShieldCheck className="text-green-500 size-7" /> : <ShieldX className="text-red-500 size-7" />}
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                <p>
+                                                    {solv.statusDisplay}
+                                                </p>
+                                            </TooltipContent>
+                                        </Tooltip>                                    
                                     </TableCell>
                                     
                                     <TableCell className="text-center text-sm text-gray-500 dark:text-muted-foreground">
-                                        
-
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Label>{solv.created_at}</Label>
-                                        </TooltipTrigger>
-                                        <TooltipContent side="bottom">
-                                            <p>{user.created_at_diffForHumans}</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-
-
-                                     
-                                    
-                                    
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <Label>{solv.created_at}</Label>
+                                            </TooltipTrigger>
+                                            <TooltipContent side="bottom">
+                                                <p>{solv.created_at_diffForHumans}</p>
+                                            </TooltipContent>
+                                        </Tooltip>                                    
                                     </TableCell>
                                     <TableCell className="pr-4">
                                     <div className="flex justify-center space-x-1">
                                     <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            {/* <Button variant="outline" size="icon" className="size-8 hover:border-sky-300" asChild>
-                                                <Link href={route('users.edit', user.id)}>
-                                                    <UserPen className="size-4" />
-                                                </Link>
-                                            </Button> */}
+                                        <TooltipTrigger asChild>                                            
                                             <Sheet>
                                             <SheetTrigger asChild>
                                                 {/* <Button variant="outline">Open</Button> */}
@@ -166,41 +196,8 @@ interface Solvency {
                                         </TooltipContent>
                                         
                                     </Tooltip>
-                                    <AppButtonDelete user={user} />
-                                    {/* <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Button variant="outline" size="icon" className="size-8 hover:border-red-500">
-                                                <Eraser className="size-4" />
-                                            </Button>
-                                        </TooltipTrigger>
-                                        <TooltipContent side="left">
-                                            <p>Eliminar</p>
-                                        </TooltipContent>
-                                    {/* <AlertDialog>
-                                        <Tooltip>
-                                            <AlertDialogTrigger asChild>
-                                                <Button variant="outline" size="icon" className="size-8 hover:border-red-500">
-                                                    <Eraser className="size-4" />
-                                                </Button>
-                                            </AlertDialogTrigger>
-                                        </Tooltip>
-                                        <AlertDialogContent>
-                                            <AlertDialogHeader>
-                                                <AlertDialogTitle>¿Eliminar este usuario?</AlertDialogTitle>
-                                                <AlertDialogDescription>
-                                                    ¿Estás seguro de que quieres eliminar a: {user.full_name}? Esta acción no se puede deshacer.
-                                                </AlertDialogDescription>
-                                            </AlertDialogHeader>
-                                            <AlertDialogFooter>
-                                                <AlertDialogCancel>
-                                                    Cancelar
-                                                </AlertDialogCancel>
-                                                <AlertDialogAction onClick={() => handleDelete(user.id)}>
-                                                    Eliminar
-                                                </AlertDialogAction>
-                                            </AlertDialogFooter>
-                                        </AlertDialogContent>
-                                    </AlertDialog> */}
+                                    {/* <AppButtonDelete solv={solv} /> */}
+                                    
                                         
                                     </div>
                                     </TableCell>
@@ -210,7 +207,7 @@ interface Solvency {
                         </Table>
                     </div>
                     {/* Llamamos nuestro componente de paginación */}
-                    <AppPagination links={users.links} currentPage={filters.perPage.toString()} />
+                    {/* <AppPagination links={solvencies.links} currentPage={filters.perPage.toString()} /> */}
                     
                     
                 </div>

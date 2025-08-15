@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import AppLayout from '@/layouts/app-layout';
-import { Head, Link, router, usePage } from '@inertiajs/react';
+import { Head, Link, router, usePage, useForm } from '@inertiajs/react';
 import { type BreadcrumbItem, PageProps } from '@/types/types';
 import { Toaster } from 'sonner';
 
@@ -41,19 +41,6 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-interface User {
-    id: number;
-    full_name: string;
-    username: string;
-    email: string;
-    avatar?: string;
-    status: string;
-    statusDisplay: string;
-    statusColor: string;
-    created_at: string;
-    avatar_url?: string;
-    avatar_color: string;
-  }
   
   interface User {
     id: number;
@@ -84,10 +71,6 @@ interface User {
       users: UsersPaginated,
       filters: Filters & { status: string | null },
   };
-  
-    export default function Index({ users, filters,  } : IndexProps) {
-    const [search, setSearch] = useState(filters.search || '');
-    const page = usePage();
 
 
     return (

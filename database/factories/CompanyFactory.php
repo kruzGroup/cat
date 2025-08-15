@@ -22,8 +22,10 @@ class CompanyFactory extends Factory
             'address' => fake()->address(),
             'description' => fake()->text($maxNbChars = 190),
             'legal_rep' => fake()->name($gender = 'male'|'female'),
+            'gender' => fake()->randomElement(['hombre', 'mujer']),
             'created_at' => now(),
             'updated_at' => now(),
+            'status' => fake()->randomElement(['active', 'inactive']),
             'taxpayer_id' => fake()->numberBetween($min = 1, $max = 11),
         ];
     }
