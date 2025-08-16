@@ -53,9 +53,7 @@ export default function AppUserSearch({ inicialSearch, filters }: Props) {
         setTimeoutId(newTimeoutId);
     };  
 
-    return (
-        <div className="m-4 flex justify-between items-center">
-            {/* Contenedor izquierdo para Input y Select */}
+    return (        
             <div className="flex items-center space-x-4">
                 <Input 
                     placeholder="name, username or email..." 
@@ -87,19 +85,7 @@ export default function AppUserSearch({ inicialSearch, filters }: Props) {
                     </SelectContent>
                 </Select>
             </div>
-            {/* Botón a la derecha */}
-            <Tooltip>
-                <TooltipTrigger asChild>
-                    <Button variant="outline" size="icon" className="size-9 hover:border-sky-300" asChild>
-                        <Link href={route('users.create')}>
-                            <UserPlus className="size-5" />
-                        </Link>
-                    </Button>
-                </TooltipTrigger>
-                <TooltipContent side="left">
-                    <p>Crear</p>
-                </TooltipContent>
-            </Tooltip>
-        </div> 
+            
+        
     )
 }
