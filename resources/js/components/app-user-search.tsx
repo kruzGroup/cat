@@ -7,7 +7,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Head, Link, router, useForm } from '@inertiajs/react';
 
 // icons
-import { UserPlus } from 'lucide-react';
 import React from "react";
 
 
@@ -15,9 +14,10 @@ import React from "react";
 interface Props {
     inicialSearch: string;
     filters: any; // TODO: Define the correct type for filters
+    redirectTo?: string;
 }
 
-export default function AppUserSearch({ inicialSearch, filters }: Props) {
+export default function AppUserSearch({ inicialSearch, filters, redirectTo }: Props) {
     // state whit Inertia
     const {data, setData} = useForm<{search: string}>({
         search: inicialSearch || '',
@@ -45,7 +45,7 @@ export default function AppUserSearch({ inicialSearch, filters }: Props) {
         const newTimeoutId = setTimeout(() => {
             const queryString = userInput ? {search: userInput} : {};
 
-            router.get(route('users.index'), queryString, {
+            router.get(redirectTo || route('users.index'), queryString, {
                 preserveState: true,
                 preserveScroll: true,
             })
