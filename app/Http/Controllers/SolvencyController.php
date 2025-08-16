@@ -19,7 +19,7 @@ class SolvencyController extends Controller
     public function index(Request $request)        
 
     {
-        $perPage = $request->input('perPage', 25);
+        $perPage = $request->input('perPage', 5);
 
             return Inertia::render('units/cat-empresas/solvencies/index', [
             'solvencies' => Solvency::search($request->search)

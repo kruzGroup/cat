@@ -83,7 +83,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                     {/* <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" /> */}
                     {/* <AppUserSearch inicialSearch={filters.search} filters={filters} /> */}
                     <div className="m-4 flex justify-between items-center">
-                        <AppUserSearch inicialSearch={filters.search} filters={filters} />
+                        <AppUserSearch inicialSearch={filters.search} filters={filters} redirectTo={route('users.index')} />
                         {/* Botón a la derecha */}
                         <AppCreateButton route={route('users.create')} icon={UserPlus} tooltipText='Crear Usuario' />
             

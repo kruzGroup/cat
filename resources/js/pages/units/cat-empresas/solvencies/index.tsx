@@ -29,7 +29,7 @@ import AppPagination from '@/components/app-pagination';
 import { PageLinkItem } from '@/types';
 import AppUserSearch from '@/components/app-user-search';
 import AppButtonDelete from '@/components/app-button-delete';
-import AppButtonCreate from '@/components/app-button-create';
+import { AppCreateButton } from '@/components/app-create-button';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -58,22 +58,22 @@ const breadcrumbs: BreadcrumbItem[] = [
     created_at_diffForHumans: string;
   }
   
-  type SolvenciesPaginated = {
-      data: Solvency[],
-      links: PageLinkItem[]
-  };
+  type UsersPaginated = {
+        data: Solvency[],
+        links: PageLinkItem[]
+    };
+    
+    type Filters = {
+        search: string,
+        perPage: number,
+    };
   
-  type Filters = {
-      search: string,
-      perPage: number,
-  };
-
-  type IndexProps = {
-      solvencies: SolvenciesPaginated,
-      filters: Filters & { status: string | null },
-  };
+    type IndexProps = {
+        solvencies: UsersPaginated,
+        filters: Filters & { status: string | null },
+    };
   
-    export default function Index({ solvencies, filters,  } : IndexProps) {
+    export default function Index({ solvencies, filters } : IndexProps) {
     const [search, setSearch] = useState(filters.search || '');
     const page = usePage();
 
@@ -86,13 +86,11 @@ const breadcrumbs: BreadcrumbItem[] = [
                     {/* <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" /> */}
                     <div className="m-4 flex justify-between items-center">
                         {/* Contenedor izquierdo para Input y Select */}                        
-                            <AppUserSearch inicialSearch={filters.search} filters={filters} />
+                        <AppUserSearch inicialSearch={filters.search} filters={filters} redirectTo={route('solvencies.index')} />
+                            
                         {/* Contenedor derecho para boton */}    
-                            <AppButtonCreate 
-                            routeName={route('users.create')} 
-                            icon={<TicketCheck className="size-5 text-blue-500" />}
-                            tooltipText="Nuevo post"
-                        />   
+                        <AppCreateButton route={route('solvencies.create')} icon={TicketCheck} tooltipText='Crear Solvencia' />
+                              
                     </div>
                     <div className='overflow-x-auto border border-gray-200 dark:border-neutral-700 rounded-lg m-4'>
                         <Table className="min-w-full border-separate border-spacing-0">
@@ -217,7 +215,7 @@ const breadcrumbs: BreadcrumbItem[] = [
                         </Table>
                     </div>
                     {/* Llamamos nuestro componente de paginación */}
-                    {/* <AppPagination links={solvencies.links} currentPage={filters.perPage.toString()} /> */}
+                    <AppPagination links={solvencies.links} currentPage={filters.perPage.toString()} />
                     
                     
                 </div>
