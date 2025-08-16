@@ -29,6 +29,7 @@ import AppPagination from '@/components/app-pagination';
 import { PageLinkItem } from '@/types';
 import AppUserSearch from '@/components/app-user-search';
 import AppButtonDelete from '@/components/app-button-delete';
+import { AppCreateButton } from '@/components/app-create-button';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -72,14 +73,22 @@ const breadcrumbs: BreadcrumbItem[] = [
       filters: Filters & { status: string | null },
   };
 
-
+  export default function Index({ users, filters } : IndexProps) {
+    // console.log(users, filters);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="User List" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">                
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border dark:bg-sidebar">
                     {/* <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" /> */}
-                    <AppUserSearch inicialSearch={filters.search} filters={filters} />
+                    {/* <AppUserSearch inicialSearch={filters.search} filters={filters} /> */}
+                    <div className="m-4 flex justify-between items-center">
+                        <AppUserSearch inicialSearch={filters.search} filters={filters} />
+                        {/* Botón a la derecha */}
+                        <AppCreateButton route={route('users.create')} icon={UserPlus} tooltipText='Crear Usuario' />
+            
+                    </div>
+
                     <div className='overflow-x-auto border border-gray-200 dark:border-neutral-700 rounded-lg m-4'>
                         <Table className="min-w-full border-separate border-spacing-0">
                             <TableHeader className="bg-gray-100 dark:bg-background">
