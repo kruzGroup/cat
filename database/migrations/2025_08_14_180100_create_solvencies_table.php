@@ -23,11 +23,13 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('company_id')
+            
+            $table->foreignId('taxpayer_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('taxpayer_id')
+
+                $table->foreignId('company_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
