@@ -24,11 +24,12 @@ import {
   import { Input } from "@/components/ui/input"
 
 // Icons
-import { UserPlus, UserPen, Eraser, ShieldX, ShieldCheck } from 'lucide-react';
+import { UserPlus, UserPen, Eraser, ShieldX, ShieldCheck, TicketCheck } from 'lucide-react';
 import AppPagination from '@/components/app-pagination';
 import { PageLinkItem } from '@/types';
 import AppUserSearch from '@/components/app-user-search';
 import AppButtonDelete from '@/components/app-button-delete';
+import AppButtonCreate from '@/components/app-button-create';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -83,7 +84,16 @@ const breadcrumbs: BreadcrumbItem[] = [
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4 overflow-x-auto">                
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border dark:bg-sidebar">
                     {/* <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" /> */}
-                    <AppUserSearch inicialSearch={filters.search} filters={filters} />
+                    <div className="m-4 flex justify-between items-center">
+                        {/* Contenedor izquierdo para Input y Select */}                        
+                            <AppUserSearch inicialSearch={filters.search} filters={filters} />
+                        {/* Contenedor derecho para boton */}    
+                            <AppButtonCreate 
+                            routeName={route('users.create')} 
+                            icon={<TicketCheck className="size-5 text-blue-500" />}
+                            tooltipText="Nuevo post"
+                        />   
+                    </div>
                     <div className='overflow-x-auto border border-gray-200 dark:border-neutral-700 rounded-lg m-4'>
                         <Table className="min-w-full border-separate border-spacing-0">
                             <TableHeader className="bg-gray-100 dark:bg-background">
