@@ -49,7 +49,7 @@ export default function AppPagination({links, currentPage} : AppPaginationProps)
                     <PaginationItem>
                         <PaginationPrevious
                             href={prevLink?.url ?? '#'}
-                            className={!prevLink?.url ? 'opacity-50 pointer-events-none' : 'border border-slate-400 dark:border dark:border-slate-400'}
+                            className={!prevLink?.url ? 'opacity-50 pointer-events-none' : 'border border-slate-400 dark:border dark:border-slate-400 h-8'}
                         />
                     </PaginationItem>
                     {/* Páginas numeradas */}
@@ -62,10 +62,9 @@ export default function AppPagination({links, currentPage} : AppPaginationProps)
                             href={link?.url ?? '#'}
                             className={`
                                 ${link?.active
-                                    ? 'bg-amber-500 text-white hover:bg-amber-600'
+                                    ? 'bg-amber-200 text-white hover:bg-amber-600 hover:border-slate-400'
                                     : 'bg-neutral-100 hover:bg-neutral-200/10 text-slate-700 dark:border border border-slate-400 dark:border-slate-400 dark:bg-neutral-900 dark:hover:bg-neutral-700 dark:text-slate-100'}
-                                text-xs
-                                inline-flex h-8 w-8 items-center justify-center rounded-md border data-[active=true]:bg-amber-500 data-[active=true]:text-white hover:bg-amber-600'}
+                                text-xs inline-flex h-8 w-8 items-center justify-center rounded-md border data-[active=true]:bg-amber-500 data-[active=true]:text-white hover:bg-amber-600'}
                             `}
                             data-active={link?.active}
                             >
@@ -78,7 +77,7 @@ export default function AppPagination({links, currentPage} : AppPaginationProps)
                     <PaginationItem>
                         <PaginationNext
                             href={nextLink?.url ?? '#'}
-                            className={!nextLink?.url ? 'opacity-50 pointer-events-none  ' : 'border border-slate-400 dark:border dark:border-slate-400'}
+                            className={!nextLink?.url ? 'opacity-50 pointer-events-none  ' : 'border border-slate-400 dark:border dark:border-slate-400 h-8'}
                         />
                     </PaginationItem>
                 </PaginationContent>
