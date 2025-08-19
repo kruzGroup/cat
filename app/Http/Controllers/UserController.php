@@ -30,7 +30,7 @@ class UserController extends Controller
                 ->paginate($perPage)
                 ->through(fn ($user) => [
                     'id' => $user->id,
-                    'company_name' => $user->full_name,
+                    'full_name' => $user->full_name,
                     'username' => $user->username,
                     'email' => $user->email,
                     'status' => $user->status,

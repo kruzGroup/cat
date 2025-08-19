@@ -114,14 +114,14 @@ const breadcrumbs: BreadcrumbItem[] = [
                                                 />
                                             ) : (
                                                 <AvatarFallback className={`text-xs font-bold ${user.avatar_color.replace('text-', '')}`}>
-                                                {user.full_name.split(' ')
-                                                .filter((name: string) => name.length > 0)
-                                               .map((name: string) => name[0].toUpperCase())
-                                                .join('')
-                                                .substring(0, 2)}
-                                                </AvatarFallback>
-                                            )}
-                                        </Avatar>
+                                                    {user.full_name.split(' ')
+                                                    .filter(name => name.length > 0)
+                                                    .map(name => name[0].toUpperCase())
+                                                    .join('')
+                                                    .substring(0, 2)}
+                                                    </AvatarFallback>
+                                                )}
+                                                </Avatar>
                                         <div>
                                             <Link href={route('users.show', user.id)}>
                                                 <p className="text-xs font-bold text-gray-900 dark:text-gray-50 uppercase ">{user.full_name}</p>
