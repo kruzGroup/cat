@@ -19,9 +19,9 @@ class SolvencyController extends Controller
     public function index(Request $request)        
 
     {
-        $perPage = $request->input('perPage', 5);
+        $perPage = $request->input('perPage', 10);
 
-            return Inertia::render('units/cat-empresas/solvencies/index', [
+        return Inertia::render('units/cat-empresas/solvencies/index', [
             'solvencies' => Solvency::search($request->search)
                 ->when($request->input('status') === 'active', function ($query) {
                     $query->where('status', 'active');
@@ -31,23 +31,24 @@ class SolvencyController extends Controller
                 })
                 ->latest()
                 ->paginate($perPage)
-                ->through(fn ($solv) => [
-                    'id' => $solv->id,
-                    'company_name' => $solv->company->name,
-                    'taxpayer_name' => $solv->taxpayer->name,
-                    'nit' => $solv->company->nit,
-                    'status' => $solv->company->status,
-                    'statusDisplay' => $solv->company->status === 'active' ? 'Activo' : 'Inactivo',
-                    'created_at' => Carbon::parse($solv->created_at)->format('d/m/y'),
-                    'created_at_diffForHumans' => Carbon::parse($solv->created_at)->diffForHumans(),
-                    'statusColor' => $solv->company->status === 'active'
+                ->through(fn ($solvency) => [
+                    'id' => $solvency->id,
+                    'company_name' => $solvency->company->name,
+                    'taxpayer_name' => $solvency->taxpayer->name,
+                    'taxpayer_nit' => $solvency->taxpayer->dui,
+                    'taxpayer_dui' => $solvency->taxpayer->dui,
+                    'company_status' => $solvency->company->status,
+                    'statusDisplay' => $solvency->company->status === 'active' ? 'Activo' : 'Inactivo',
+                    'created_at' => Carbon::parse($solvency->created_at)->format('d/m/y'),
+                    'created_at_diffForHumans' => Carbon::parse($solvency->created_at)->diffForHumans(),
+                    'statusColor' => $solvency->company->status === 'active'
                         ? 'bg-green-100 text-green-800'
                         : 'bg-red-100 text-red-800',
-                    'avatar_url' => $solv->company->avatar ? Storage::url('public/'.$solv->avatar) : null,
-                    'avatar_initials' => $solv->company->avatar_initials,
-                    'is_avatar_image' => $solv->company->is_avatar_image,
-                    'avatar_color' => $solv->avatar_color,
-                    'created_at_diffForHumans' => $solv->created_at->diffForHumans(),
+                    'avatar_url' => $solvency->avatar ? Storage::url('public/'.$solvency->avatar) : null,
+                    'avatar_initials' => $solvency->avatar_initials,
+                    'is_avatar_image' => $solvency->is_avatar_image,
+                    'avatar_color' => $solvency->avatar_color,
+                    'created_at_diffForHumans' => $solvency->created_at->diffForHumans(),
                 ])
                 ->withQueryString(),
                 'filters' => [

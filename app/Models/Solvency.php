@@ -111,13 +111,13 @@ class Solvency extends Model
         }
     );
 }
-    public function scopeSearch(Builder $query, $value):void
-    {
-        if ($value) {
-            $query->where('name', 'LIKE', "%{$value}%")
-                  ->orWhere('lastname', 'LIKE', "%{$value}%")
-                  ->orWhere('username', 'LIKE', "%{$value}%")
-                  ->orWhere('email', 'LIKE', "%{$value}%");
-        }
+public function scopeSearch(Builder $query, $value):void
+{
+    if ($value) {
+        $query->where('name', 'LIKE', "%{$value}%")
+              ->orWhere('lastname', 'LIKE', "%{$value}%")
+              ->orWhere('username', 'LIKE', "%{$value}%")
+              ->orWhere('email', 'LIKE', "%{$value}%");
     }
+}
 }
